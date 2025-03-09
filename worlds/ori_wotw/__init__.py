@@ -5,7 +5,7 @@
 # TODO fix the in-game location counter
 
 
-from typing import List, Dict, Tuple
+from typing import List, Dict
 from collections import Counter
 
 from .Rules import (set_moki_rules, set_gorlek_rules, set_gorlek_glitched_rules, set_kii_rules,
@@ -23,9 +23,6 @@ from .Refills import refill_events
 from .Options import WotWOptions, option_groups, LogicDifficulty, Quests
 from .Spawn_items import spawn_items, spawn_names
 from .Presets import options_presets
-from .Headers import (h_core, h_better_spawn, h_no_combat_shrines, h_no_combat_arenas, h_no_combat_demibosses,
-                      h_no_combat_bosses, h_no_hearts, h_no_quests, h_no_hand, h_no_trials, h_qol, h_no_ks,
-                      h_open_mode, h_glades_done, h_hints, h_no_rain, h_knowledge)
 
 from worlds.AutoWorld import World, WebWorld
 from worlds.generic.Rules import add_rule, set_rule
@@ -79,20 +76,6 @@ class WotWWorld(World):
         player = self.player
         options = self.options
 
-        # Contain all the locations that are used
-        loc_list: List[str] = loc_sets["Base"].copy() + loc_sets["ExtraQuests"].copy()
-        if not options.glades_done:
-            loc_list += loc_sets["Rebuild"].copy()
-        if not options.no_trials:
-            loc_list += loc_sets["Trials"].copy()
-        if not options.qol and not options.quests != Quests.option_none:
-            loc_list += loc_sets["QOL"].copy()
-        if options.quests == Quests.option_no_hand:
-            loc_list += loc_sets["Quests"].copy()
-        elif options.quests == Quests.option_all:
-            loc_list += loc_sets["HandToHand"].copy()
-            loc_list += loc_sets["Quests"].copy()
-
         for region_name in region_table:
             region = Region(region_name, player, world)
             world.regions.append(region)
@@ -109,6 +92,7 @@ class WotWWorld(World):
         for loc_name in loc_table.keys():  # Create regions on locations
             region = Region(loc_name, player, world)
             world.regions.append(region)
+            region.locations.append(WotWLocation(player, loc_name, self.location_name_to_id[loc_name], region))
         for quest_name in quest_table:  # Quests are locations that have to be tracked like events
             event_name = quest_name + ".quest"
             region = Region(event_name, player, world)
@@ -119,9 +103,6 @@ class WotWWorld(World):
             region.locations.append(event)
             base_region = world.get_region(quest_name, player)
             base_region.connect(region)
-        for loc_name in loc_list:  # Attach the used locations to their region
-            region = world.get_region(loc_name, player)
-            region.locations.append(WotWLocation(player, loc_name, self.location_name_to_id[loc_name], region))
 
         for event in event_table:  # Create events, their item, and a region to attach them
             region = Region(event, player, world)
@@ -227,6 +208,23 @@ class WotWWorld(World):
             world.get_location("WindtornRuins.Seir", player).place_locked_item(self.create_item("Launch"))
             removed_items.append("Launch")
 
+        # Contain all the locations that are used
+        empty_locations: List[str] = []
+        if options.glades_done:
+            empty_locations += loc_sets["Rebuild"].copy()
+        if options.no_trials:
+            empty_locations += loc_sets["Trials"].copy()
+        if options.qol or options.quests == Quests.option_none:
+            empty_locations += loc_sets["QOL"].copy()
+        if options.quests != Quests.option_all:
+            empty_locations += loc_sets["HandToHand"].copy()
+        if options.quests == Quests.option_none:
+            empty_locations += loc_sets["Quests"].copy()
+
+        for location in empty_locations:
+            loc = world.get_location(location, player)
+            loc.place_locked_item(self.create_item("Nothing"))
+
         counter = Counter(skipped_items)
         pool: List[WotWItem] = []
 
@@ -331,7 +329,7 @@ class WotWWorld(World):
                 quest_list += loc_sets["QOL"].copy()
             add_rule(victory_conn, lambda s: s.has_all((quests for quests in quest_list), player))
 
-        def try_connect(region_in: Region, region_out: Region, connection: str|None = None, rule=None):
+        def try_connect(region_in: Region, region_out: Region, connection: str | None = None, rule=None):
             """Create the region connection if it doesn't already exist."""
             if connection is None:
                 connection = f"{region_in.name} -> {region_out.name}"

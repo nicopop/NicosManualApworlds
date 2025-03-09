@@ -129,7 +129,8 @@ item_table = {  # The tuple contains the amount, the classification, the ID
     "Keystone": (40, ItemClassification.progression_skip_balancing, 3363019522506752),
     "Shard Slot": (5, ItemClassification.useful, 3363019522572288),
     "Health Fragment": (24, ItemClassification.progression_skip_balancing, 3363019522637824),
-    "Energy Fragment": (24, ItemClassification.progression_skip_balancing, 3363019522703360)
+    "Energy Fragment": (24, ItemClassification.progression_skip_balancing, 3363019522703360),
+    "Nothing": (0, ItemClassification.filler, 3363019522310144)
     }
 
 
@@ -138,7 +139,7 @@ group_table = {
                "Flash", "Water Dash", "Burrow", "Launch", "Clean Water", "Water Breath", "Hammer", "Sentry",
                "Shuriken", "Spear", "Blaze"],
     "collectibles": ["Health Fragment", "Energy Fragment", "Keystone", "Ore", "Shard Slot", "Ancestral Light 1",
-               "Ancestral Light 2"],
+                     "Ancestral Light 2"],
     "spirit_light": ["1 Spirit Light", "50 Spirit Light", "100 Spirit Light", "200 Spirit Light"],
     "shards": ["Overcharge", "Triple Jump", "Wingclip", "Bounty", "Swap", "Magnet", "Splinter", "Reckless", "Quickshot",
                "Resilience", "Light Harvest", "Vitality", "Life Harvest", "Energy Harvest", "Energy (Shard)",
