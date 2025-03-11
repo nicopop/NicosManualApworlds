@@ -495,7 +495,7 @@ class WotWWorld(World):
         def get_location_item(location_name, player):
             item = world.get_location(location_name, player).item
             if item is None:
-                item = Item("Nothing", ItemClassification.filler, None, player)
+                item = self.create_item("Nothing")
             return item
 
         for loc in shops:
