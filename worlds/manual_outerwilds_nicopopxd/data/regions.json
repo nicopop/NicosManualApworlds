@@ -1,86 +1,133 @@
 {
-  "Tutorial": {
+  "$schema": "https://github.com/ManualForArchipelago/Manual/raw/Schemas-in-json/schemas/Manual.regions.schema.json",
+  "Timber Hearth Village": {
     "_comment": "Contains the 4 starting locations",
-    "requires": [],
-    "connects_to": [ "Space" ],
+    "requires": "",
+    "connects_to": [ "Ship" ],
     "starting": true
   },
+  "Ship": {
+    "requires": "|Launch Codes|",
+    "connects_to": [ "Space", "Timber Hearth" ]
+  },
   "Space": {
-    "_comment": "For now contains all the Main locations",
-    "requires": [ "Launch Codes" ],
-    "connects_to": [ "Ember Twin", "Ash Twin", "Timber Hearth", "Brittle Hollow", "Giant's Deep", "Dark Bramble", "Quantum Trials", "Interloper", "The Stranger" ]
+    "requires": "|Ship Key|",
+    "connects_to": [ "Ember Twin", "Ash Twin", "Timber Hearth", "Brittle Hollow", "Giant's Deep InShip", "Dark Bramble",  "Quantum Moon", "Interloper", "The Stranger" ]
+  },
+  "Sun Station": {
+    "requires": "|SpaceSuit|"
   },
   "Ash Twin": {
-    "requires": [],
-    "connects_to": [ "Space", "Ember Twin", "Brittle Hollow" ]
+    "requires": "|SpaceSuit|",
+    "connects_to": ["Ember Twin", "Teleporters" ]
+  },
+  "Teleporters":{
+    "requires": "|Teleporters| and |SpaceSuit|",
+    "connects_to": ["Sun Station", "Ember Twin", "Timber Hearth" , "Brittle Hollow - TP", "Giant's Deep - Statue Island"],
+    "_comment": "Adding those entrance rule so logic doesn't try to reverse teleport until I find a mod to do it",
+    "entrance_rules": {
+      "Ember Twin": "|Reverse Teleporters|",
+      "Timber Hearth": "|Reverse Teleporters|",
+      "Brittle Hollow - TP": "|Reverse Teleporters|",
+      "Giant's Deep - Statue Island": "|Reverse Teleporters|"
+    }
   },
   "Ember Twin": {
-    "requires": [],
-    "connects_to": [ "Space", "Quantum Trials", "Ash Twin" ]
+    "requires": "",
+    "connects_to": [ "Ash Twin", "Teleporters" ],
+        "entrance_rules": {
+      "Teleporters": "|SpaceSuit|"
+    }
   },
   "Timber Hearth": {
-    "requires": [],
-    "connects_to": [ "Space", "Quantum Trials", "The Stranger" ]
+    "requires": "|SpaceSuit| or |Ship Key|",
+    "connects_to": [ "Teleporters" ]
   },
   "Brittle Hollow": {
-    "requires": [],
-    "connects_to": [ "Space", "Quantum Trials"]
+    "requires": "",
+    "connects_to": [ "Blackhole Forge"],
+    "entrance_rules": {
+      "Blackhole Forge": "|SpaceSuit|"
+    }
+  },
+  "Brittle Hollow - TP": {
+    "requires": "",
+    "connects_to": [ "Brittle Hollow", "Teleporters", "Blackhole Forge"]
+  },
+  "Blackhole Forge": {
+    "requires": "",
+    "connects_to": ["Brittle Hollow"],
+    "entrance_rules": {
+      "Brittle Hollow": "|SpaceSuit| and |Ship Key|",
+      "Brittle Hollow - TP": "|SpaceSuit| and|Teleporters| and |Ship Key|"
+    }
   },
   "Giant's Deep": {
-    "requires": [],
-    "connects_to": [ "Space", "Quantum Trials" ]
+    "requires": "",
+    "connects_to": [ "Giant's Deep - Statue Island" ]
+  },
+  "Giant's Deep - Statue Island": {
+    "requires": "|SpaceSuit|",
+    "connects_to": [ "Teleporters" ]
+  },
+  "Giant's Deep InShip": {
+    "requires": "|Ship Key| and |SpaceSuit|",
+    "connects_to": ["Giant's Deep" ]
   },
   "Dark Bramble": {
-    "_comment": "Contains every location in the Dark Bramble planet",
-    "requires": [ "Anglerfish Biology" ],
-    "connects_to": [ "Space" ]
+    "requires": "|SpaceSuit|",
+    "connects_to": []
   },
-  "Quantum Trials": {
+  "Quantum Moon": {
     "_comment": "Contains everything Quantum related",
-    "requires": [ "Signal > Quantum", "Signaloscope" ],
-    "connects_to": [ "Space" ]
+    "requires": "|Quantum Rule > imaging| and |Photos| and (|Scout| or |SpaceSuit|)",
+    "connects_to": []
   },
   "Interloper": {
-    "requires": [],
-    "connects_to": [ "Space" ]
+    "requires": "|SpaceSuit|",
+    "connects_to": []
   },
 
   "The Stranger": {
     "_comment": "Base Region for the DLC",
-    "requires": "|Signaloscope| and |Signal > DeepSpace| and |@DLC - Stranger Entrance:1|",
-    "connects_to": [ "Subterranean Lake", "Shrouded Woodlands", "Starlit Cove", "Endless Canyon" ]
+    "requires": "|SpaceSuit| and |Signaloscope| and |Signal > DeepSpace| and {OptOne(|Stranger Access|)} and |@DLC - Stranger Entrance:1|",
+    "connects_to": ["DreamWorld General"]
   },
   "DreamWorld General": {
-    "_comment": "Contains locations that doesnt belong to any specific Dreamworld (like the river or just entering the dreamworld in general)",
-    "requires": "|@DLC Flame:1|",
+    "_comment": "Contains locations that doesn't belong to any specific Dreamworld (like the river or just entering the dreamworld in general)",
+    "requires": "|@DLC Flame:1| and {OptOne(|DreamWorld Access|)}",
     "connects_to": [ "Subterranean Lake", "Shrouded Woodlands Archive", "Shrouded Woodlands", "Starlit Cove", "Endless Canyon" ]
   },
   "Shrouded Woodlands": {
-    "requires": "|EYE > River Lowlands Flame|",
-    "connects_to": [ "The Stranger", "Shrouded Woodlands Archive", "Subterranean Lake", "Starlit Cove", "Endless Canyon", "DreamWorld General" ]
+    "requires": "|River Lowlands Flame|",
+    "connects_to": ["Shrouded Woodlands Archive", "Subterranean Lake", "Starlit Cove", "Endless Canyon" ]
   },
   "Shrouded Woodlands Archive": {
-    "requires": "(|DreamWorld Loading Glitch| and (|EYE > River Lowlands Flame| or (|EYE > Cinder Isles Flame| and |DreamWorld Door Candles|) or (|EYE > Hidden Gorge Flame| and (|DreamWorld Render Glitch| or |DreamWorld Grabbing Hands|)) )) or (|EYE > River Lowlands Flame| and |DreamWorld Fake Fireplace| and ((|EYE > Cinder Isles Flame| and |DreamWorld Door Candles|) or (|EYE > Hidden Gorge Flame| and (|DreamWorld Render Glitch| or |DreamWorld Grabbing Hands|))))",
-    "connects_to": []
+    "requires": "(|DreamWorld Loading Glitch| and (|River Lowlands Flame| or (|Cinder Isles Flame| and |DreamWorld Door Candles|) or (|Hidden Gorge Flame| and (|DreamWorld Render Glitch| or |DreamWorld Grabbing Hands|)) )) or (|River Lowlands Flame| and |DreamWorld Fake Fireplace| and ((|Cinder Isles Flame| and |DreamWorld Door Candles|) or (|Hidden Gorge Flame| and (|DreamWorld Render Glitch| or |DreamWorld Grabbing Hands|))))",
+    "connects_to": ["All Archive"]
   },
   "Starlit Cove": {
-    "requires": "|EYE > Cinder Isles Flame|",
-    "connects_to": [ "The Stranger", "Starlit Cove Archive", "Subterranean Lake", "Shrouded Woodlands", "Endless Canyon", "DreamWorld General" ]
+    "requires": "|Cinder Isles Flame|",
+    "connects_to": ["Starlit Cove Archive", "Subterranean Lake", "Shrouded Woodlands", "Endless Canyon" ]
   },
   "Starlit Cove Archive": {
-    "requires": "|DreamWorld Door Candles| and (|DreamWorld Death Glitch| or (|DreamWorld Grabbing Hands| and |DreamWorld Hidden Hand|))",
-    "connects_to": []
+    "requires": "(|DreamWorld Door Candles| and |DreamWorld Death Glitch|) or (|DreamWorld Door Candles| and |DreamWorld Grabbing Hands| and |DreamWorld Hidden Hand|)",
+    "connects_to": ["All Archive"]
   },
   "Endless Canyon": {
-    "requires": "|EYE > Hidden Gorge Flame|",
-    "connects_to": [ "The Stranger", "Endless Canyon Archive",  "Subterranean Lake", "Shrouded Woodlands", "Starlit Cove", "DreamWorld General" ]
+    "requires": "|Hidden Gorge Flame|",
+    "connects_to": ["Endless Canyon Archive",  "Subterranean Lake", "Shrouded Woodlands", "Starlit Cove" ]
   },
   "Endless Canyon Archive": {
-    "requires": "|DreamWorld Render Glitch| or (|DreamWorld Fake Wall| and ( |DreamWorld Render Glitch| or |DreamWorld Grabbing Hands|))",
+    "requires": "|DreamWorld Render Glitch| or (|DreamWorld Fake Wall| and |DreamWorld Grabbing Hands|)",
+    "connects_to": ["All Archive"]
+  },
+  "All Archive": {
+    "requires": "((|DreamWorld Loading Glitch| and (|River Lowlands Flame| or (|Cinder Isles Flame| and |DreamWorld Door Candles|) or (|Hidden Gorge Flame| and (|DreamWorld Render Glitch| or |DreamWorld Grabbing Hands|)) )) or (|River Lowlands Flame| and |DreamWorld Fake Fireplace| and ((|Cinder Isles Flame| and |DreamWorld Door Candles|) or (|Hidden Gorge Flame| and (|DreamWorld Render Glitch| or |DreamWorld Grabbing Hands|))))) and ((|DreamWorld Door Candles| and |DreamWorld Death Glitch|) or (|DreamWorld Door Candles| and |DreamWorld Grabbing Hands| and |DreamWorld Hidden Hand|)) and (|DreamWorld Render Glitch| or (|DreamWorld Fake Wall| and |DreamWorld Grabbing Hands|))",
     "connects_to": []
   },
   "Subterranean Lake": {
-    "requires": "(|EYE > Submerge Structure Flame| or ((|DreamWorld Loading Glitch| and (|EYE > River Lowlands Flame| or (|EYE > Cinder Isles Flame| and |DreamWorld Door Candles|) or (|EYE > Hidden Gorge Flame| and (|DreamWorld Render Glitch| or |DreamWorld Grabbing Hands|)) ))) )",
+    "requires": "(|Submerged Structure Flame| or ((|DreamWorld Loading Glitch| and (|River Lowlands Flame| or (|Cinder Isles Flame| and |DreamWorld Door Candles|) or (|Hidden Gorge Flame| and (|DreamWorld Render Glitch| or |DreamWorld Grabbing Hands|)) ))) )",
     "connects_to": []
   }
 }

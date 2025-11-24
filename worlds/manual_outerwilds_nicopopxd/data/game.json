@@ -1,7 +1,9 @@
 {
+    "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.game.schema.json",
     "game": "OuterWilds",
     "creator": "Nicopopxd",
 
     "filler_item_name": "Quantum dust",
-    "version": "6.1.0"
+    "version": "6.3.0-Async",
+    "death_link": true
 }

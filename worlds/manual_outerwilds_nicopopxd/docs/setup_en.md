@@ -5,10 +5,12 @@
      src="https://upload.wikimedia.org/wikipedia/fr/thumb/d/dc/Outer_Wilds_Logo.png/800px-Outer_Wilds_Logo.png?20190112131250"
     >
     <h1 align="center">Base Game + DLC Customizable Edition</h1>
-    <p align="center">v6.0.0</p>
+    <p align="center">v6.2.0</p>
 </p>
 
-***A star/asterix (\*) next to a line mean recommended.***
+Last-Updated 2024-04-23 (yyyy-mm-dd)
+
+***A star/asterisk (\*) next to a line mean recommended.***
 
 ## Required Software
 
@@ -52,6 +54,9 @@ Install those from the Mod Manager:
 - [Trajectory Prediction](https://outerwildsmods.com/mods/trajectoryprediction/)
   - Shows where your shipscout/player is going vs selected planet.
   - Require you enabling "Use Incremental GC" in the modmanager settings.
+- [Resource Management](https://outerwildsmods.com/mods/resourcemanagement/)
+  - A mod that makes the oxygen and fuel in your ship matter.
+  - Oxygen regen when in area with oxygen and fuel regenerate while the ship is landed.
 
 #### DLC Mods
 
@@ -64,6 +69,7 @@ Install those from the Mod Manager:
 ## Installation Procedures
 
 Make sure a copy of the Manual world is in the lib/world directory of your client-side installation.
+For more general information on this Apworld check the [Guide (Webhost)](/games/Manual_OuterWilds_Nicopopxd/info/en)/ [Guide (Github)](en_Manual_OuterWilds_Nicopopxd.md)
 
 ### Optional installs
 
@@ -110,7 +116,7 @@ you installed and after that you'll only need to start from the Mod Manager when
 
 In the "Tracker and Locations" tab you'll find buttons corresponding with all the available locations in the Randomizer.  
 Since this is a manual game its built on trust™ you press the locations when you get to them,  
-hopefully in the futur only what you can access will be visible but at the moment  
+hopefully in the future only what you can access will be visible but at the moment  
 you could press victory and it would accept it.
 
 ## Main Game

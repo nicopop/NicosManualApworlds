@@ -1,15 +1,91 @@
 {
+  "$schema": "https://github.com/ManualForArchipelago/Manual/raw/Schemas-in-json/schemas/Manual.categories.schema.json",
   "2b Trap": {
     "hidden": true
   },
   "Base Game Main Progression": {
-    "hidden": true
+    "hidden": true,
+    "create_item_group": false
+  },
+  "Base Need For End": {
+    "hidden": true,
+    "create_item_group": false
   },
   "Base Game":{
+    "hidden": true,
+    "yaml_option_off": [ "Enable_Base_game"],
+    "create_item_group": false
+  },
+  "Win_Eye": {
+    "hidden": true,
+    "create_item_group": false,
+    "create_location_group": false
+  },
+  "Goal Eye": {
+    "hidden": true,
+    "create_location_group": false
+  },
+  "Goal Prisoner": {
+    "hidden": true,
+    "create_location_group": false
+  },
+  "Goal GitM": {
+    "hidden": true,
+    "create_location_group": false
+  },
+  "Goal ATP BST": {
+    "hidden": true,
+    "create_location_group": false
+  },
+  "Goal Lab BST": {
+    "hidden": true,
+    "create_location_group": false
+  },
+  "Goal Quantum_Stuck": {
+    "hidden": true,
+    "create_location_group": false
+  },
+  "Goal Stranger_Stuck": {
+    "hidden": true,
+    "create_location_group": false
+  },
+  "Goal Dream_Stuck": {
+    "hidden": true,
+    "create_location_group": false
+  },
+  "Campfire": {
+    "_comment": "Might turn into an objective or something idk ;)",
     "hidden": true
   },
-  "DLC - Eye": {
-    "hidden": true
+  "Win_ATP_break_spacetime": {
+    "hidden": true,
+    "create_item_group": false,
+    "create_location_group": false
+  },
+  "Win_HEL_break_spacetime": {
+    "hidden": true,
+    "create_item_group": false,
+    "create_location_group": false
+  },
+  "Win_solanum": {
+    "hidden": true,
+    "create_item_group": false,
+    "create_location_group": false
+  },
+  "require_solanum": {
+    "hidden": true,
+    "create_item_group": false,
+    "create_location_group": false
+  },
+  "need_warpdrive": {
+    "hidden": true,
+    "create_item_group": false,
+    "create_location_group": false
+  },
+  "EotE": {
+    "hidden": true,
+    "yaml_option_off": [ "Enable_EotE_DLC"],
+    "create_item_group": false
   },
   "DLC - Stranger Entrance": {
     "hidden": true
@@ -17,15 +93,42 @@
   "DLC Flame": {
     "hidden": true
   },
-  "DLC - Reduced Knowledge": {
-    "yaml_option": [ "DLC_Main_Knowledge_Requirement" ],
+  "DLC Glitch": {
     "hidden": true
+  },
+  "DLC - Reduced Knowledge": {
+    "yaml_option": [ "dlc_access_items" ],
+    "hidden": true,
+    "create_item_group": false,
+    "create_location_group": false
   },
   "DLC - Spooky": {
     "yaml_option": [ "enable_spooks" ],
-    "hidden": true
+    "hidden": true,
+    "create_item_group": false
   },
-  "Example Yaml-option category": {
-    "yaml_option_off": [ "DLC_enabled" ]
+  "do_place_item_category": {
+    "yaml_option": [ "do_place_item_category" ],
+    "hidden": true,
+    "create_item_group": false,
+    "create_location_group": false
+  },
+  "no_place_item_category": {
+    "yaml_option": [ "!do_place_item_category" ],
+    "hidden": true,
+    "item_item_group": false,
+    "create_location_group": false
+  },
+  "do_launch_codes": {
+    "yaml_option": [ "!remove_launch_codes" ],
+    "hidden": true,
+    "create_item_group": false,
+    "create_location_group": false
+  },
+  "no_launch_codes": {
+    "yaml_option": [ "remove_launch_codes" ],
+    "hidden": true,
+    "create_item_group": false,
+    "create_location_group": false
   }
 }

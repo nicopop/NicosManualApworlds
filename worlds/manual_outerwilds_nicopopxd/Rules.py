@@ -1,11 +1,15 @@
-from worlds.generic.Rules import set_rule
+from typing import TYPE_CHECKING
+from worlds.generic.Rules import set_rule, add_rule
 from .Regions import regionMap
-from worlds.AutoWorld import World
-from BaseClasses import MultiWorld
+from .hooks import Rules
+from BaseClasses import MultiWorld, CollectionState
 from .Helpers import clamp, is_item_enabled
+
 import re
 import math
 
+if TYPE_CHECKING:
+    from . import ManualWorld
 
 def infix_to_postfix(expr, location):
     prec = {"&": 2, "|": 2, "!": 3}
@@ -34,7 +38,7 @@ def infix_to_postfix(expr, location):
     return postfix
 
 
-def evaluate_postfix(expr, location):
+def evaluate_postfix(expr: str, location: str) -> bool:
     stack = []
     try:
         for c in expr:
@@ -60,55 +64,70 @@ def evaluate_postfix(expr, location):
         raise KeyError("Invalid logic format for location/region {}.".format(location))
     return stack.pop()
 
-
-def set_rules(base: World, world: MultiWorld, player: int):
-    # this is only called if a player's item_count doesnt exist
-    def get_fallback_item_counts():
-        if 'fallback' not in base.item_counts:
-            base.item_counts['fallback'] = {}
-            for item in base.item_name_to_item.values():
-                if is_item_enabled(world,player,item):
-                    base.item_counts['fallback'][item['name']] = int(item.get('count', 1))
-
-        return base.item_counts.get('fallback')
-
+def set_rules(world: "ManualWorld", multiworld: MultiWorld, player: int):
     # this is only called when the area (think, location or region) has a "requires" field that is a string
-    def checkRequireStringForArea(state, area):
+    def checkRequireStringForArea(state: CollectionState, area: dict):
         requires_list = area["requires"]
-        # fallback if items_counts[player] not present (will not be accurate to hooks item count)
-        items_counts = base.item_counts.get(player, get_fallback_item_counts())
+
+        # Get the "real" item counts of item in the pool/placed/starting_items
+        items_counts = world.get_item_counts(player)
+
+        if requires_list == "":
+            return True
+
+        for item in re.findall(r'\{(\w+)\((.*?)\)\}', requires_list):
+            func_name = item[0]
+            func_args = item[1].split(",")
+            if func_args == ['']:
+                func_args.pop()
+            func = getattr(Rules, func_name)
+            result = func(world, multiworld, state, player, *func_args)
+            if isinstance(result, bool):
+                requires_list = requires_list.replace("{" + func_name + "(" + item[1] + ")}", "1" if result else "0")
+            else:
+                requires_list = requires_list.replace("{" + func_name + "(" + item[1] + ")}", str(result))
+
+        for loc in re.findall(r'\[[^\]]+\]',requires_list):
+            loc_name = "|[Event] "+loc.lstrip('[').rstrip(']')+"|"
+            requires_list = requires_list.replace(loc,loc_name)
+
 
         # parse user written statement into list of each item
-        for item in re.findall(r'\|[^|]+\|', area["requires"]):
+        for item in re.findall(r'\|[^|]+\|', requires_list):
             require_type = 'item'
 
             if '|@' in item:
                 require_type = 'category'
 
             item_base = item
-            item = item.replace('|', '').replace('@', '')
+            item = item.lstrip('|@$').rstrip('|')
 
-            item_parts = item.split(":")
+            item_parts = item.split(":")  # type: list[str]
             item_name = item
             item_count = "1"
+
+
             if len(item_parts) > 1:
-                item_name = item_parts[0]
-                item_count = item_parts[1]
+                item_name = item_parts[0].strip()
+                item_count = item_parts[1].strip()
 
             total = 0
 
             if require_type == 'category':
-                category_items = [item for item in base.item_name_to_item.values() if "category" in item and item_name in item["category"]]
+                category_items = [item for item in world.item_name_to_item.values() if "category" in item and item_name in item["category"]]
                 category_items_counts = sum([items_counts.get(category_item["name"], 0) for category_item in category_items])
                 if item_count.lower() == 'all':
                     item_count = category_items_counts
                 elif item_count.lower() == 'half':
-                    item_count = category_items_counts / 2
+                    item_count = int(category_items_counts / 2)
                 elif item_count.endswith('%') and len(item_count) > 1:
                     percent = clamp(float(item_count[:-1]) / 100, 0, 1)
                     item_count = math.ceil(category_items_counts * percent)
                 else:
-                    item_count = int(item_count)
+                    try:
+                        item_count = int(item_count)
+                    except ValueError as e:
+                        raise ValueError(f"Invalid item count `{item_name}` in {area}.") from e
 
                 for category_item in category_items:
                     total += state.count(category_item["name"], player)
@@ -120,7 +139,7 @@ def set_rules(base: World, world: MultiWorld, player: int):
                 if item_count.lower() == 'all':
                     item_count = item_current_count
                 elif item_count.lower() == 'half':
-                    item_count = item_current_count / 2
+                    item_count = int(item_current_count / 2)
                 elif item_count.endswith('%') and len(item_count) > 1:
                     percent = clamp(float(item_count[:-1]) / 100, 0, 1)
                     item_count = math.ceil(item_current_count * percent)
@@ -142,7 +161,7 @@ def set_rules(base: World, world: MultiWorld, player: int):
         return (evaluate_postfix(requires_string, area))
 
     # this is only called when the area (think, location or region) has a "requires" field that is a dict
-    def checkRequireDictForArea(state, area):
+    def checkRequireDictForArea(state: CollectionState, area: dict):
         canAccess = True
 
         for item in area["requires"]:
@@ -184,7 +203,7 @@ def set_rules(base: World, world: MultiWorld, player: int):
         return canAccess
 
     # handle any type of checking needed, then ferry the check off to a dedicated method for that check
-    def fullLocationOrRegionCheck(state, area):
+    def fullLocationOrRegionCheck(state: CollectionState, area: dict):
         # if it's not a usable object of some sort, default to true
         if not area:
             return True
@@ -201,25 +220,34 @@ def set_rules(base: World, world: MultiWorld, player: int):
     used_location_names = []
     # Region access rules
     for region in regionMap.keys():
-        used_location_names.extend([l.name for l in world.get_region(region, player).locations])
+        used_location_names.extend([l.name for l in multiworld.get_region(region, player).locations])
         if region != "Menu":
-            for exitRegion in world.get_region(region, player).exits:
-                def fullRegionCheck(state, region=regionMap[region]):
+            for exitRegion in multiworld.get_region(region, player).exits:
+                def fullRegionCheck(state: CollectionState, region=regionMap[region]):
                     return fullLocationOrRegionCheck(state, region)
 
-                set_rule(world.get_entrance(exitRegion.name, player), fullRegionCheck)
+                add_rule(multiworld.get_entrance(exitRegion.name, player), fullRegionCheck)
+
+            entrance_rules = regionMap[region].get("entrance_rules", [])
+            for e in entrance_rules:
+                entrance = multiworld.get_entrance(f'{e}To{region}', player)
+                add_rule(entrance, lambda state, rule={"requires": entrance_rules[e]}: fullLocationOrRegionCheck(state, rule))
 
     # Location access rules
-    for location in base.location_table:
+    for location in world.location_table:
         if location["name"] not in used_location_names:
             continue
 
-        locFromWorld = world.get_location(location["name"], player)
+        locFromWorld = multiworld.get_location(location["name"], player)
+        EventLoc = None
+        if location.get("create_event"):
+            EventLoc = multiworld.get_location(f"[Event] {location['name']}", player)
+        # EventLoc = multiworld.get_location(f"[Event] {location['name']}", player)
 
         locationRegion = regionMap[location["region"]] if "region" in location else None
 
         if "requires" in location: # Location has requires, check them alongside the region requires
-            def checkBothLocationAndRegion(state, location=location, region=locationRegion):
+            def checkBothLocationAndRegion(state: CollectionState, location=location, region=locationRegion):
                 locationCheck = fullLocationOrRegionCheck(state, location)
                 regionCheck = True # default to true unless there's a region with requires
 
@@ -229,16 +257,22 @@ def set_rules(base: World, world: MultiWorld, player: int):
                 return locationCheck and regionCheck
 
             set_rule(locFromWorld, checkBothLocationAndRegion)
+            if EventLoc:
+                set_rule(EventLoc, checkBothLocationAndRegion)
         elif "region" in location: # Only region access required, check the location's region's requires
             def fullRegionCheck(state, region=locationRegion):
                 return fullLocationOrRegionCheck(state, region)
 
             set_rule(locFromWorld, fullRegionCheck)
+            if EventLoc:
+                set_rule(EventLoc, fullRegionCheck)
         else: # No location region and no location requires? It's accessible.
             def allRegionsAccessible(state):
                 return True
 
             set_rule(locFromWorld, allRegionsAccessible)
+            if EventLoc:
+                set_rule(EventLoc, allRegionsAccessible)
 
     # Victory requirement
-    world.completion_condition[player] = lambda state: state.has("__Victory__", player)
+    multiworld.completion_condition[player] = lambda state: state.has("__Victory__", player)

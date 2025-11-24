@@ -5,12 +5,14 @@
      src="https://upload.wikimedia.org/wikipedia/fr/thumb/d/dc/Outer_Wilds_Logo.png/800px-Outer_Wilds_Logo.png?20190112131250"
     >
     <h1 align="center">Base Game + DLC Customizable Edition</h1>
-    <p align="center">v6.0.0</p>
+    <p align="center">v6.2.0</p>
 </p>
 
-## Where is the settings page?
+Last-Updated 2024-05-21 (yyyy-mm-dd)
 
-The player settings page for this game is located <a href="../player-settings">here</a>.  
+## Where is the options page?
+
+The player options page for this game is located [here (WebHost)](../player-options).  
 It contains all the options you need to configure and export a config file.
 
 ## What does randomization do to this game?
@@ -29,57 +31,78 @@ For now, everything in the "0 - Beginning" category can be accessed from the sta
 
 Depend on what you choose:
 
-### Goal Standard Base Game and both or Eye
+### Vanilla Percent aka Goal Standard Content: Base Game and both
 
 At minimum you need to have both seen and received the Adv. Warp Core and Coords for the eye and most [Progressions](#progression-items)  
 And then Grab the Adv. Warp Core in game get to the Vessel and Warp to the eye.  
 For a more detailed requirement check [Here](#base-game-goal-items).  
 For more info on the location of the goal: check [here](#standard-in-base-game-or-eye-requirement)
 
-### Goal Standard only DLC or Prisoner Goal DLC required
+### Prisoner Percent aka Goal Standard Content: only DLC
 
+**[DLC required]**
 You need to get to the Prisoner, your victory is when you join the prisoner in the river.  
 to get there you'll need a combo of [DLC Progressions](#dlc-progressions) and some way to get to the Subterranean Lake.  
 For a more detailed requirement check [Here](#dlc-goal-items).  
 For more info on the location of the goal: check [here](#standard-in-dlc-or-prisoner-requirements)
 
-### Ash Twin Project Break Spacetime
+### Ghosts_In_The_Machine Percent aka Visit All Archive
 
-At minimum you need to have both seen and received the Adv. Warp Core and Teleport [Knowledges](#progression-items)  
+**[DLC required]**
+Basically to win this one you need access to all the Stranger's Forbidden Archives and then  
+do the Ghosts in the Machine achievement aka Reach all 3 Forbidden Archives in a single loop without getting caught.  
+For more info on the location of the goal: check [here](#visit-all-archives-requirement)
+
+### Break_Space-Time_In_ATP Percent aka Ash Twin Project Break Spacetime
+
+At minimum you need to have Teleport [Knowledges](#progression-items)  
 then get in the Ash Twin Project and break SpaceTime thats all there is to it.  
 For more info on the location of the goal: check [here](#ash-twin-project-break-spacetime-requirement)
 
-### High Energy Lab Break Spacetime
+### Break_Space-Time_In_Lab Percent aka High Energy Lab Break Spacetime
 
 At minimum you need to have "Signal > distress", the scout and Signaloscope  
 then get in the High Energy Lab and break SpaceTime thats all there is to it.  
 For more info on the location of the goal: check [here](#high-energy-lab-break-spacetime-requirement)
 
-### Visit All Archive DLC required
+### Quantum_Stuck Percent aka Stuck with Solanum
 
-Basically to win this one you need access to all the Stranger's Forbbiden Archives and then  
-do the Ghosts in the Machine achivement aka Reach all 3 Forbidden Archives in a single loop without getting caught.  
-For more info on the location of the goal: check [here](#visit-all-archives-requirement)
+Instead of warping to the Eye like [Vanilla%](#vanilla-percent-aka-goal-standard-content-base-game-and-both)
+bring the Adv. warp core to Solanum then wait for credits
+For more info on the location of the goal: check [here](#stuck-with-solanum-requirement)
+
+### Stranger_Stuck Percent aka Stuck on the Stranger
+
+**[DLC required]**
+Instead of warping to Eye the Eye like [Vanilla%](#vanilla-percent-aka-goal-standard-content-base-game-and-both)  
+bring the Adv. warp core to the Stranger then wait for credits.
+For more info on the location of the goal: check [here](#stuck-on-the-stranger-requirement)
+
+### Dream_Stuck Percent aka Stuck in the Dream/Simulation
+
+**[DLC required]**
+Instead of warping to Eye the Eye like [Vanilla%](#vanilla-percent-aka-goal-standard-content-base-game-and-both)  
+bring the Adv. warp core to the Stranger then die to get in the Dream, wait for credits.
+For more info on the location of the goal: check [here](#stuck-in-the-dream-requirement)
 
 ## Which items can be in another player's world?
 
-Most item can be in another player's world except for all the "Seen X" items or the "Visited Y" items  
-3 random local item that are not traps are set but they can be disabled using the no local compatible option.
+Every Items can be in other player's worlds.
 
 ## What if I have items, unlocks, or locations that I'd like to not have randomized?
 
-It's all manual. Just exclude them from either the item or location list. Just make sure not to exclude items  
-that starts with either "seen X" or "Visited X" and do not exclude the location that give those.
+It's all manual. Just exclude them from either the item or location list. ~~Just make sure not to exclude items
+that starts with either "seen X" or "Visited X" and do not exclude the location that give those.~~ This is not the case anymore since those items were replaced by Events in the Async build.
 
 ## How do I install the mod for a Manual game?
 
-There is no mandatory mods for this game. For more info look at the <a href="../../../tutorial/Manual_OuterWilds_Nicopopxd/setup/en#base-game-mods">setup guide</a>.
+There is no mandatory mods for this game. Unless you Enable 2 way teleporters logic, then you will need a mod (LOGIC NOT TESTED). For more info look at the [setup guide (Webhost)](/tutorial/Manual_OuterWilds_Nicopopxd/setup/en) /
+[setup guide (Github)](setup_en.md).
 
 ## Game Troubleshooting
 
 - [Progression Items](#progression-items)
 - [Goal Items](#goal-items)
-- [Visits](#visits)
 - [Other Items](#other-items)
 - [Specific Items required per End Goal location](#specific-items-required-per-end-goal)
 
@@ -105,8 +128,8 @@ There is no mandatory mods for this game. For more info look at the <a href="../
 - "DreamWorld Fake Fireplace": allow you to go through the fake fireplace in Shrouded Woodlands.
 - "DreamWorld Fake Wall": allow you to go through the fake wall in Endless Canyon.
 - "DreamWorld Hidden Hand": this and DreamWorld Grabbing Hands allows you to go and turn off the light in Starlit Cove.
-- "EYE > Progressive Slide burning room": unlocks going in the burning rooms, the order is from the main entrance follow the water.
-- "EYE > Progressive Datamined Sealed Vault Code": replace the last 2 glitch to open the vault, counts from left to right with the vault behind you, first one is useless.
+- "Progressive Slide burning room": unlocks going in the burning rooms, the order is from the main entrance follow the water.
+- "Progressive Datamined Sealed Vault Code": replace the last 2 glitch to open the vault, counts from left to right with the vault behind you, first one is useless.
 
 ### Goal Items
 
@@ -114,8 +137,6 @@ There is no mandatory mods for this game. For more info look at the <a href="../
 
 - "Coords to the eye"
 - "Adv. warp core"
-- "Seen Coords"
-- "Seen Adv. warp core"
 - "Signaloscope"
 - "Scout"
 - "Signal > Distress"
@@ -127,26 +148,10 @@ There is no mandatory mods for this game. For more info look at the <a href="../
 - "Stranger Access"
 - "DreamWorld Access"
 - "DreamWorld Render Glitch" + "DreamWorld Death Glitch" + "DreamWorld Loading Glitch"
-  - but the last 2 can be replaced by "EYE > Progressive Datamined Sealed Vault Code" 2 and 3
-- and one of the mutiple way to get to the Subterranean Lake:
-  - "EYE > Submerge Structure Flame"
+  - but the last 2 can be replaced by "Progressive Datamined Sealed Vault Code" 2 and 3
+- and one of the multiple way to get to the Subterranean Lake:
+  - "Submerged Structure Flame"
   - or any other flame + any item required to get to their boat access + "DreamWorld Loading Glitch"
-
-### Visits
-
-#### Base Game Visits
-
-- "Seen Coords": You've been in the tracker module.
-- "Seen Adv. warp core": You've been in the Ash Twin Project.
-- "Seen Prisoner": You've seen the prisoner in the Vault.
-- "Seen Solanum": You've seen Solanum on the Quantum Moon.
-
-#### Dlc Visits
-
-- "Visited CodeVault": You've been in the Code vault and thus "know" the codes there.
-- "Visited Shrouded Woodlands Archive": You've been in the Shrouded Woodlands Archive 1/3 needed for the all archive location.
-- "Visited Starlit Cove Archive": You've been in the Shrouded Woodlands Archive 1/3 needed for the all archive location.
-- "Visited Endless Canyon Archive": You've been in the Shrouded Woodlands Archive 1/3 needed for the all archive location.
 
 ### Other items
 
@@ -172,49 +177,81 @@ There is no mandatory mods for this game. For more info look at the <a href="../
 
 #### Standard in Base Game or Eye requirement
 
-**[Description](#goal-standard-base-game-and-both-or-eye)**
+**[Description](#vanilla-percent-aka-goal-standard-content-base-game-and-both)**
 
-- "FINAL > Get the Adv. warp core to the vessel and Warp to the Eye"
+- "Vanilla%"
   - **Region**: Dark Bramble
-  - requires: "Coords to the eye", "Seen Coords", "Adv. warp core", "Seen Adv. warp core"
-    "Signaloscope", "Signal > Distress", "Scout"
-  - Always contain: "Victory"
+  - requires: Being able to get to the vessel, having seen the coord, and having both the adv. warp core and the coords
+    - aka [5 - Get to the Vessel] and [4 - See the Coords] and |@Base Need For End:2|
+      - [5 - Get to the Vessel] = |Signaloscope| and |Signal > Distress| and |Scout| and |Scout Photos| and |Anglerfish Biology|
+      - [4 - See the Coords] = |Counter-Clockwise Tornadoes| and |Jellyfishes|
+      - |@Base Need For End:2| = |Coords to the eye| and |Adv. warp core|
 
 #### Standard in DLC or Prisoner Requirements
 
-**[Description](#goal-standard-only-dlc-or-prisoner-goal-dlc-required)**
+**[Description](#prisoner-percent-aka-goal-standard-content-only-dlc)**
 
-- "94 - Communicate with the prisoner in the Subterranean Lake Dream"
+- "Prisoner%"
   - **Region**: Subterranean Lake,
-  - requires: Seen Prisoner
-  - AKA (|EYE > Progressive Datamined Sealed Vault Code:3| and |DreamWorld Render Glitch|)
-      or (|DreamWorld Loading Glitch| and |DreamWorld Render Glitch|
-      and |DreamWorld Death Glitch|)
+  - requires: Getting in the vault
+    - AKA (|Progressive Datamined Sealed Vault Code:3| and |DreamWorld Render Glitch|)
+    - or (|Progressive Datamined Sealed Vault Code:2| and |DreamWorld Render Glitch| and |DreamWorld Death Glitch|)
+    - or (|DreamWorld Loading Glitch| and |DreamWorld Render Glitch| and |DreamWorld Death Glitch|)
 
 #### Visit All Archives Requirement
 
-**[Description](#visit-all-archive-dlc-required)**
+**[Description](#ghosts_in_the_machine-percent-aka-visit-all-archive)**
 
-- "9 - In a loop visit all 3 archive without getting caught"
-  - **Region**: DreamWorld General
-  - requires: "|Visited Shrouded Woodlands Archive| and |Visited Starlit Cove Archive| and |Visited Endless Canyon Archive|"
+- "Ghosts_In_The_Machine%"
+  - **Region**: All Archive
+  - requires: Being able to get to every archive in at least 1 one way each
   - category: "9 - DreamWorld General"
 
 #### Ash Twin Project Break Spacetime Requirement
 
-**[Description](#ash-twin-project-break-spacetime)**
+**[Description](#break_space-time_in_atp-percent-aka-ash-twin-project-break-spacetime)**
 
-- "1 - Break Space-Time in the Ash Twin Project"
+- "Break_Space-Time_In_ATP%"
   - **Region**: Ash Twin
   - category: "1 - Ash Twin"
-  - requires: "|Seen Adv. warp core| and |Adv. warp core|"
-  - Seen Adv. warp core requires "Teleport Knownledge"
+  - requires: "[1 - Get in the Ash Twin Project]"
+    - aka "Teleporters"
 
 #### High Energy Lab Break Spacetime Requirement
 
-**[Description](#high-energy-lab-break-spacetime)**
+**[Description](#break_space-time_in_lab-percent-aka-high-energy-lab-break-spacetime)**
 
-- "1 - Break space time in the lab",
+- "Break_Space-Time_In_Lab%",
   - **Region**: Ember Twin
   - category: "1 - Ember Twin"
   - requires: "|Signaloscope| and |Signal > Distress| and |Scout|"
+
+#### Stuck with Solanum Requirement
+
+**[Description](#quantum_stuck-percent-aka-stuck-with-solanum)**
+
+- "Quantum_Stuck%"
+  - **Region**: Quantum Trials
+  - category: "6 - Quantum Moon"
+  - requires: Adv. warp core, being able to get it and what's needed to get to solanum
+    - aka "|Adv. warp core| and [1 - Get in the Ash Twin Project] and |Quantum Rule > imaging| and |Scout| and |Scout Photos| and |Quantum Rule > entanglement| and |Quantum Rule > sixth location|"
+
+#### Stuck on the Stranger Requirement
+
+**[Description](#stranger_stuck-percent-aka-stuck-on-the-stranger)**
+
+- "Stranger_Stuck%"
+  - **Region**: The Stranger
+  - category: 8 - The Stranger"
+  - requires: Adv. warp core, being able to get it and being able to land in the stranger
+    - aka "|Adv. warp core| and [1 - Get in the Ash Twin Project] and [8 - Get in the stranger]"
+
+#### Stuck in the Dream Requirement
+
+**[Description](#dream_stuck-percent-aka-stuck-in-the-dreamsimulation)**
+
+- "Quantum_Stuck%"
+  - **Region**: Quantum Trials
+  - category: "6 - Quantum Moon"
+  - requires: Adv. warp core, being able to get it, being able to land in the stranger and any way to get in the dream
+    - aka "|Adv. warp core| and [1 - Get in the Ash Twin Project] and [8 - Get in the stranger] and [9 - Enter the DreamWorld]"
